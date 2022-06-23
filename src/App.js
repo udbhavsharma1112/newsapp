@@ -1,25 +1,51 @@
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, { Component } from 'react'
+import Navbar from './components/Navbar';
+import News from './components/News';
+// import Bg from './components/Bg';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+        dark:0
+    }
 }
-
-export default App;
+  mode=()=>{
+    if(this.state.dark) {
+      this.setState({
+        dark:0
+      })
+    }
+    else {
+      this.setState({
+        dark:1
+      })
+    }
+ }
+  render() {
+    return (
+      <div>
+          <Router>
+       <Navbar mode={this.mode} isdark={this.state.dark} />
+       {/* business entertainment general health science sports technology */}
+       <Switch>
+          <Route exact path="/"> <News key="general" pagesize="12" country="in" category="general" isdark={this.state.dark}/></Route>
+          <Route exact path="/general"> <News key="2" pagesize="12" country="in" category="general" isdark={this.state.dark}/></Route>
+          <Route exact path="/business"> <News key="business" pagesize="12" country="in" category="business" isdark={this.state.dark}/></Route>
+          <Route exact path="/entertainment"> <News key="entertainment" pagesize="12" country="in" category="entertainment" isdark={this.state.dark}/></Route>
+          <Route exact path="/health"> <News key="health" pagesize="12" country="in" category="health" isdark={this.state.dark}/></Route>
+          <Route exact path="/science"> <News key="science" pagesize="12" country="in" category="science" isdark={this.state.dark}/></Route>
+          <Route exact path="/sports"> <News key="sports" pagesize="12" country="in" category="sports" isdark={this.state.dark}/></Route>
+          <Route exact path="/technology"> <News key="technology" pagesize="12" country="in" category="technology" isdark={this.state.dark}/></Route>
+        </Switch>
+       </Router>
+      </div>
+    )
+  }
+}
